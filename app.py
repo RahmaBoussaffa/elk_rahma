@@ -8,34 +8,29 @@ import json
 import csv
 import io
 
-# Charger les variables d'environnement
 load_dotenv()
 
-# Configuration de Flask
+
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
-# Configuration Elasticsearch
+
 es = Elasticsearch(os.getenv("ELASTICSEARCH_HOST"))
 
-# Configuration MongoDB
 mongo_client = MongoClient(os.getenv("MONGODB_URI"))
 mongo_db = mongo_client[os.getenv("MONGO_DB_NAME", "logs_db")]
 mongo_collection = mongo_db[os.getenv("MONGO_COLLECTION_NAME", "logs")]
 
-# Configuration Redis
 redis_client = Redis(
     host=os.getenv("REDIS_HOST", "redis"),
     port=int(os.getenv("REDIS_PORT", 6380))
 )
 
 
-# Route principale
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Upload de logs (CSV ou JSON)
 @app.route('/upload', methods=['POST'])
 def upload_logs():
     file = request.files['file']
@@ -56,21 +51,13 @@ def upload_logs():
 
     return "Logs uploaded successfully", 200
 
-# Recherche de logs avec mise en cache Redis
 @app.route('/search', methods=['GET'])
 def search_logs():
     query = request.args.get('query')
-    cache_key = f"search:{query}"
-    cached_result = redis_client.get(cache_key)
-
-    if cached_result:
-        return jsonify(json.loads(cached_result))
 
     response = es.search(index="logs", query={"match": {"message": query}})
-    redis_client.set(cache_key, json.dumps(response['hits']['hits']), ex=3600)  # Expiration de 1 heure
     return jsonify(response['hits']['hits'])
 
-# Intégration de l'API Kibana
 @app.route('/kibana_dashboard')
 def kibana_dashboard():
     dashboard_id = request.args.get('dashboard_id', 'default')

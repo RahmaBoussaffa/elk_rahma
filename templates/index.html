@@ -9,15 +9,15 @@
 </head>
 <body class="bg-gradient-to-r from-blue-500 to-indigo-600 text-gray-100 p-8 font-sans">
 
-    <!-- Container -->
+   
     <div class="max-w-3xl mx-auto space-y-8 bg-white bg-opacity-80 p-6 rounded-lg shadow-xl">
         
-        <!-- Header -->
+       
         <header>
             <h1 class="text-4xl font-semibold text-center text-gray-900">Monitoring ELK</h1>
         </header>
 
-        <!-- File Upload Form -->
+     
         <form action="/upload" method="post" enctype="multipart/form-data" class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
             <label class="block mb-2 text-lg font-medium text-gray-700">Upload Logs:</label>
             <input type="file" name="file" required class="block w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors duration-200">
@@ -29,7 +29,7 @@
             </button>
         </form>
 
-        <!-- Search Logs Form -->
+        
         <form action="/search" method="get" class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
             <label class="block mb-2 text-lg font-medium text-gray-700">Search Logs:</label>
             <input type="text" name="query" required class="block w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none transition-colors duration-200">
@@ -41,7 +41,7 @@
             </button>
         </form>
 
-        <!-- Kibana Dashboard Form -->
+        
         <form action="/kibana_dashboard" method="get" class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
             <label class="block mb-2 text-lg font-medium text-gray-700">Kibana Dashboard ID:</label>
             <input type="text" name="dashboard_id" placeholder="e.g., logs-dashboard" class="block w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-colors duration-200">
